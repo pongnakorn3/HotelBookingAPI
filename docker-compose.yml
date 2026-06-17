@@ -1,0 +1,34 @@
+services:
+  postgres-db:
+    image: postgres:15-alpine
+    container_name: hotel_booking_db
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: hotel_booking
+    ports:
+      - "5499:5432"  # ใช้ 5434 หนีโปรเจกต์เก่า
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - hotel_network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: hotel_booking_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@email.com
+      PGADMIN_DEFAULT_PASSWORD: adminpassword
+      PGADMIN_LISTEN_PORT: 8082  # สั่งให้ pgAdmin ข้างในรันที่พอร์ต 8082 แทนพอร์ต 80 เพื่อไม่ให้ชน!
+    ports:
+      - "8082:8082"  # ลิงก์พอร์ต 8082 ออกมาข้างนอกตรงๆ
+    depends_on:
+      - postgres-db
+    networks:
+      - hotel_network
+
+volumes:
+  postgres_data:
+
+networks:
+  hotel_network:  # สร้าง Network แยกเฉพาะของโปรเจกต์โรงแรม
