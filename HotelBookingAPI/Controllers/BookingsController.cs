@@ -80,7 +80,7 @@ namespace HotelBookingAPI.Controllers
                 await _context.SaveChangesAsync();
                 Console.WriteLine($"[Clean Garbage] ล้างใบจองค้างจ่ายอันเก่าของลูกค้า ID: {userIdFromToken} ไป {pendingGarbageBookings.Count} รายการ");
             }
-
+            
             //วิ่งไปค้นหาข้อมูลของห้องพักที่ลูกค้ากำลังจะจอง (ตาม RoomId ที่ส่งมา)
             var roomData = await _context.Rooms.FindAsync(booking.RoomId);
 
