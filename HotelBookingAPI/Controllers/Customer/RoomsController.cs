@@ -3,7 +3,7 @@ using HotelBookingAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace HotelBookingAPI.Controllers
+namespace HotelBookingAPI.Controllers.Customer
 {
     [Route("api/rooms")] // ตัวนี้จะกลายเป็น url: api/rooms
     [ApiController]

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Omise;
 
-namespace HotelBookingAPI.Controllers
+namespace HotelBookingAPI.Controllers.Customer
 {
     [Route("api/bookings")]
     [ApiController]

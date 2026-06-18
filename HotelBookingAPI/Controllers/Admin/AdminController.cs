@@ -9,7 +9,7 @@ using HotelBookingAPI.DTOs;
 using HotelBookingAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 
-namespace HotelBookingAPI.Controllers
+namespace HotelBookingAPI.Controllers.Admin
 {
     [ApiController]
     [Route("api/admin")]

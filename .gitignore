@@ -1,1 +1,6 @@
+## สกัดขยะจาก Visual Studio & .NET Build Output
+HotelBookingAPI/bin/
+HotelBookingAPI/obj/
+*.user
+*.suo
 .vs/

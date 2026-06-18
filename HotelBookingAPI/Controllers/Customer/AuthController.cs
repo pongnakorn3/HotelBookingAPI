@@ -14,7 +14,7 @@ using System.Security.Claims;
 using System.Text;
 
 
-namespace HotelBookingAPI.Controllers
+namespace HotelBookingAPI.Controllers.Customer
 {
     [Route("api/auth")]
     [ApiController]
@@ -51,7 +51,7 @@ namespace HotelBookingAPI.Controllers
             string hashedPassword = BCrypt.Net.BCrypt.HashPassword(dto.Password);
 
             //ผูกข้อมูลลงโมเดล Customer 
-            var newCustomer = new Customer
+            var newCustomer = new HotelBookingAPI.Models.Customer
             {
                 Email = dto.Email,
                 PasswordHash = hashedPassword, //บันทึกรหัสลับ
