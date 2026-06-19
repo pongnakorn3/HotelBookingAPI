@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HotelBookingAPI.Models
 {
-    [Table("bookings")] //บอกให้รู้จักตารางของ bookings ใน Docker
+    [Table("bookings")] // บอกให้รู้จักตารางของ bookings ใน Docker
     public class Booking
     {
         [Key]
@@ -39,10 +40,30 @@ namespace HotelBookingAPI.Models
 
         [Column("hasextrabed")]
         public bool HasExtraBed { get; set; } = false;
-        
+
         [Column("adult")]
         public int Adult { get; set; } = 2; // กำหนดค่าเริ่มต้นเป็น 2 คนฟรี
+
         [Column("child")]
         public int Child { get; set; } = 0;
+
+        [Column("payment_method")]
+        public string PaymentMethod { get; set; } = string.Empty;
+
+        [Column("customer_phone")]
+        public string? CustomerPhone { get; set; }
+
+        [Column("customer_email")]
+        public string? CustomerEmail { get; set; }
+
+        // 🎯 แก้ไขจาก internal set เป็น set ธรรมดา เพื่อให้ Controller เข้าถึงได้ และจับคู่พิมพ์เล็กใน Postgres
+        [Column("customer_first_name")]
+        public string? CustomerFirstName { get; set; }
+
+        [Column("customer_last_name")]
+        public string? CustomerLastName { get; set; }
+        
+        [ForeignKey("CustomerId")]
+        public virtual Customer? Customer { get; set; }
     }
 }

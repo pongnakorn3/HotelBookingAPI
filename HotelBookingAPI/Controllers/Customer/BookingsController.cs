@@ -157,6 +157,16 @@ namespace HotelBookingAPI.Controllers.Customer
             // รวมราคาสุทธิ
             booking.TotalPrice = basePrice + extraBedPrice + totalExtraPersonPrice;
 
+            var customerProfile = await _context.Customers.FindAsync(booking.CustomerId);
+            if (customerProfile != null)
+            {
+                // 🎯 ถ้าในใบจองหน้าบ้านไม่ได้กรอกชื่อส่งมา (เป็นค่าว่าง) ให้เอาข้อมูลจากตารางสมาชิกยัดใส่แทนทันที
+                if (string.IsNullOrEmpty(booking.CustomerFirstName)) booking.CustomerFirstName = customerProfile.FirstName;
+                if (string.IsNullOrEmpty(booking.CustomerLastName)) booking.CustomerLastName = customerProfile.LastName;
+                if (string.IsNullOrEmpty(booking.CustomerPhone)) booking.CustomerPhone = customerProfile.Phone;
+                if (string.IsNullOrEmpty(booking.CustomerEmail)) booking.CustomerEmail = customerProfile.Email;
+            }
+
             // 8. บันทึกลงฐานข้อมูล
             _context.Bookings.Add(booking);
             await _context.SaveChangesAsync();
@@ -300,6 +310,8 @@ namespace HotelBookingAPI.Controllers.Customer
                 {
                     //ถ้าจ่ายเงินสำเร็จ อัปเดตสถานะบิลในฐานข้อมูลเราทันที!
                     booking.Status = "Confirmed";
+                    booking.PaymentMethod = "Omise";
+
                     _context.Bookings.Update(booking);
                     await _context.SaveChangesAsync();
 
@@ -313,6 +325,8 @@ namespace HotelBookingAPI.Controllers.Customer
                             BookingNumber = booking.BookingNumber,
                             BookingId = booking.BookingId,
                             RoomCount = booking.RoomCount,
+
+                            PaymentMethod = booking.PaymentMethod,
 
                             // 🎯 รวมรายละเอียดจำนวนผู้เข้าพักทั้งหมดให้เป็นระเบียบ
                             GuestDetails = new
