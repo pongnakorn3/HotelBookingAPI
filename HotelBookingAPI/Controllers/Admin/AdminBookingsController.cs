@@ -1,5 +1,6 @@
 ﻿using HotelBookingAPI.Data;
 using HotelBookingAPI.DTOs;
+using HotelBookingAPI.Helpers;
 using HotelBookingAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -107,8 +108,8 @@ namespace HotelBookingAPI.Controllers.Admin
                     // 🎯 บันทึกแยกคอลัมน์ลงฐานข้อมูลตรง ๆ ได้อย่างสวยงามแล้วครับ!
                     CustomerFirstName = dto.CustomerFirstName,
                     CustomerLastName = dto.CustomerLastName,
-                    CustomerPhone = dto.CustomerPhone,
-                    CustomerEmail = dto.CustomerEmail,
+                    CustomerPhone = CryptoHelper.Encrypt(dto.CustomerPhone),
+                    CustomerEmail = CryptoHelper.Encrypt(dto.CustomerEmail),
 
                     CheckInDate = dto.CheckInDate.Date,
                     CheckOutDate = dto.CheckOutDate.Date,
@@ -140,7 +141,9 @@ namespace HotelBookingAPI.Controllers.Admin
                     TotalNights = totalNights,
                     TotalPrice = booking.TotalPrice,
                     PaymentMethod = booking.PaymentMethod,
-                    Status = booking.Status
+                    Status = booking.Status,
+                    CustomerPhone = booking.CustomerPhone,
+                    CustomerEmail = booking.CustomerEmail
                 });
             }
             catch (Exception ex)
